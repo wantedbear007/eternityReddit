@@ -6,19 +6,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // Screens
 import Home from '../../screens/Home';
-import Trending from '../../screens/Trending';
+import Popular from '../../screens/Popular';
 import Search from '../../screens/Search';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomNavigation = () => (
   <Tab.Navigator
-    initialRouteName="Trending"
+    initialRouteName="Popular"
     barStyle={styles.navigationBar}
     shifting={true}>
     <Tab.Screen
-      name="Trending"
-      component={Trending}
+      name="Popular"
+      component={Popular}
       options={{
         tabBarIcon: ({color}) => (
           <MaterialIcons name="explore" color={color} size={26} />
