@@ -48,7 +48,7 @@ const BottomNavigation = () => (
 
 const styles = StyleSheet.create({
   navigationBar: {
-    backgroundColor: colors.accent,
+    backgroundColor: colors.black,
     paddingVertical: 4,
   },
 });

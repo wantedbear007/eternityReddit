@@ -2,6 +2,7 @@ import React from 'react';
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import colors from '../assets/colors/colors';
 import {ScreenWidth} from '../assets/Dimensions/ScreenDimensions';
+import ContentCard from '../components/PopularSection/ContentCard';
 
 const Popular = () => {
   return (
@@ -10,6 +11,7 @@ const Popular = () => {
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>Popular</Text>
       </View>
+      <ContentCard />
     </View>
   );
 };
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderTopLeftRadius: 50,
     borderBottomLeftRadius: 50,
+    zIndex: 100
   },
   headingText: {
     color: colors.title,
