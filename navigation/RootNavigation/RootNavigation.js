@@ -10,15 +10,13 @@ import BottomNavigation from '../BottomNavigation/BottomNavigation';
 
 const Stack = createNativeStackNavigator();
 
-const RootNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="BottomNavigation" component={BottomNavigation} />
-        <Stack.Screen name="Details" component={Details} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+const RootNavigation = () => (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="BottomNavigation" component={BottomNavigation} />
+      <Stack.Screen name="Details" component={Details} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
 
 export default RootNavigation;
