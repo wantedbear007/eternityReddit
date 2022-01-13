@@ -11,7 +11,7 @@ const PopularRender = ({item}) => {
       let imageUrl = item.data.preview.images[0].resolutions;
       if (imageUrl.length > 2) {
         imageUrl = item.data.preview.images[0].resolutions[2].url;
-      } else imageUrl = item.data.preview.images[0].resolutions[1].url;
+      } else imageUrl = item.data.preview.images[0].resolutions[0].url;
 
       imageUrl = imageUrl.replace(/amp;/g, '');
       return <Image source={{uri: imageUrl}} style={styles.image} />;
@@ -72,17 +72,16 @@ const styles = StyleSheet.create({
     width: ScreenWidth / 1.2,
   },
   image: {
-      height: 500,
-      resizeMode: 'contain',
+    height: 500,
+    resizeMode: 'contain',
     width: '100%',
     marginVertical: 15,
     borderRadius: 5,
   },
   authorText: {
-    // fontWeight: '500',
     color: colors.accent,
     fontSize: 15,
-    marginHorizontal: 18
+    marginHorizontal: 18,
   },
   informationContainer: {
     flexDirection: 'row',
@@ -101,14 +100,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   likes: {
-      color: colors.accent
-
+    color: colors.accent,
   },
   awards: {
-      color: colors.white
+    color: colors.white,
   },
   comments: {
-      color: colors.white
+    color: colors.white,
   },
   subRedditContainer: {
     backgroundColor: colors.lightGray,
