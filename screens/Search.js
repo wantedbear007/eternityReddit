@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,20 +7,58 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  StatusBar,
+  ActivityIndicator,
+  FlatList,
+  Keyboard,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import colors from '../assets/colors/colors';
-import {ScreenWidth} from '../assets/Dimensions/ScreenDimensions';
+import SearchDataRender from '../components/Search/SearchDataRender';
 
 const Search = () => {
   const [searchText, setSearchText] = useState('');
+  const [searchData, setSearchData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(false);
 
-  const textInputHandler = () => {
-    console.log(searchText);
+  // SearchHandler
+  const buttonHandler = () => {
+    setDataLoading(true);
+    axios
+      .get(`https://www.reddit.com/search/.json?q=${searchText}`)
+      .then(response => {
+        setSearchData(response.data.data.children);
+        setLoading(false);
+        Keyboard.dismiss();
+        setDataLoading(false);
+      });
   };
+
+  const renderItems = ({item}) => <SearchDataRender item={item} />;
+
+  const SearchResults = () =>
+    loading ? (
+      <Text style={styles.redditSlogan}>
+        Search the front page of the Internet 😉!
+      </Text>
+    ) : dataLoading ? (
+      <ActivityIndicator size="large" color={colors.white} />
+    ) : (
+      <FlatList
+        data={searchData}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderItems}
+        maxToRenderPerBatch={5}
+        initialNumToRender={5}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+      />
+    );
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.parentContainer}>
+      <StatusBar backgroundColor={colors.card} />
       <Text style={styles.searchTitle}>Search</Text>
       <View style={styles.searchTextContainer}>
         <MaterialIcons name="search" color={colors.accent} size={25} />
@@ -28,16 +67,17 @@ const Search = () => {
           placeholderTextColor={colors.grayText}
           style={styles.textInput}
           borderColor={colors.white}
+          disableFullscreenUI={true}
+          multiline={false}
+          clearButtonMode="while-editing"
           value={searchText}
-          numberOfLines={1}
           onChangeText={text => setSearchText(text)}
         />
-        <TouchableOpacity
-          style={styles.searchButton}
-          onPress={textInputHandler}>
+        <TouchableOpacity onPress={buttonHandler} style={styles.searchButton}>
           <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
+      <SearchResults />
     </KeyboardAvoidingView>
   );
 };
@@ -77,9 +117,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent,
     paddingHorizontal: 15,
     paddingVertical: 9,
-    borderRadius: 40,
+    borderRadius: 10,
   },
   searchButtonText: {
     fontWeight: '600',
+  },
+  redditSlogan: {
+    fontFamily: 'JosefinSans-SemiBold',
+    fontSize: 20,
+    color: colors.grayText,
+    marginTop: 10,
+    textAlign: 'center',
+    marginHorizontal: 40,
   },
 });
