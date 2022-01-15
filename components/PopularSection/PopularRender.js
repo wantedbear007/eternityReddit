@@ -19,11 +19,11 @@ const PopularRender = ({item}) => {
   };
 
   return (
-    <View style={styles.parentContainer}>
+    <TouchableOpacity activeOpacity={0.6} style={styles.parentContainer}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>{item.data.title}</Text>
         <TouchableOpacity>
-          <MaterialIcons name="share" color={colors.white} size={30} />
+          <MaterialIcons name="share" color={colors.white} size={25} />
         </TouchableOpacity>
       </View>
       <View>
@@ -45,43 +45,47 @@ const PopularRender = ({item}) => {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default memo(PopularRender);
 
+// ! CHANGE WIDTH AND HEIGHT TO VALUES RECEIVED FROM API
+
 const styles = StyleSheet.create({
   parentContainer: {
     backgroundColor: colors.card,
-    marginVertical: 10,
+    marginVertical: 7,
     borderRadius: 18,
     //   paddingHorizontal: 10,
     paddingVertical: 20,
+    marginHorizontal: 5
   },
   titleContainer: {
     flexDirection: 'row',
-    marginHorizontal: 3,
+    marginHorizontal: 5,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   titleText: {
-    fontSize: 20,
+    fontSize: 18,
     color: colors.white,
-    fontWeight: '500',
+    // fontWeight: '500',
     width: ScreenWidth / 1.2,
   },
   image: {
-    height: 500,
+    // height: 500,
+    aspectRatio: 1,
     resizeMode: 'contain',
     width: '100%',
     marginVertical: 15,
-    borderRadius: 5,
+    borderRadius: 3,
   },
   authorText: {
     color: colors.accent,
-    fontSize: 15,
-    marginHorizontal: 18,
+    fontSize: 13,
+    marginHorizontal: 13,
   },
   informationContainer: {
     flexDirection: 'row',

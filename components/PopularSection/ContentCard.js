@@ -24,7 +24,7 @@ const ContentCard = () => {
 
   const renderItems = ({item}) =>
     loading ? (
-      <ActivityIndicator size="large" color="#000" />
+      <ActivityIndicator size="large" style={{marginTop: 200}} color={colors.white} />
     ) : (
       <PopularRender item={item} />
     );
@@ -36,7 +36,7 @@ const ContentCard = () => {
   // Loader function
   const renderLoader = () => (
     <View>
-      <ActivityIndicator size="large" color="#000" />
+      <ActivityIndicator size="large" color={colors.white} />
     </View>
   );
 

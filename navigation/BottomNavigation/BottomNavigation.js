@@ -13,7 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const BottomNavigation = () => (
   <Tab.Navigator
-    initialRouteName="Popular"
+    initialRouteName="Search"
     barStyle={styles.navigationBar}
     shifting={true}>
     <Tab.Screen
