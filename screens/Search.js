@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   FlatList,
   Keyboard,
+  ToastAndroid,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import colors from '../assets/colors/colors';
@@ -24,15 +25,19 @@ const Search = () => {
 
   // SearchHandler
   const buttonHandler = () => {
-    setDataLoading(true);
-    axios
-      .get(`https://www.reddit.com/search/.json?q=${searchText}`)
-      .then(response => {
-        setSearchData(response.data.data.children);
-        setLoading(false);
-        Keyboard.dismiss();
-        setDataLoading(false);
-      });
+    if (searchText == '' && ' ') {
+      ToastAndroid.show('Please enter something !', ToastAndroid.SHORT);
+    } else {
+      setDataLoading(true);
+      axios
+        .get(`https://www.reddit.com/search/.json?q=${searchText}`)
+        .then(response => {
+          setSearchData(response.data.data.children);
+          setLoading(false);
+          Keyboard.dismiss();
+          setDataLoading(false);
+        });
+    }
   };
 
   const renderItems = ({item}) => <SearchDataRender item={item} />;
@@ -57,7 +62,7 @@ const Search = () => {
     );
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.parentContainer}>
+    <KeyboardAvoidingView behavior="heigth" style={styles.parentContainer}>
       <StatusBar backgroundColor={colors.card} />
       <Text style={styles.searchTitle}>Search</Text>
       <View style={styles.searchTextContainer}>
