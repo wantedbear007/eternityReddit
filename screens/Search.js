@@ -61,10 +61,23 @@ const Search = () => {
       />
     );
 
+  const SearchTextWhileLoading = () =>
+    dataLoading ? (
+      <ActivityIndicator size="large" color={colors.white} />
+    ) : (
+      <Text>Search</Text>
+    );
+
+    const SearchTitle = () => (
+      loading ? (
+        <Text style={styles.searchTitle}>Search</Text> 
+      ) : null
+    )
   return (
     <KeyboardAvoidingView behavior="heigth" style={styles.parentContainer}>
       <StatusBar backgroundColor={colors.card} />
-      <Text style={styles.searchTitle}>Search</Text>
+      <SearchTitle />
+      {/* <Text style={styles.searchTitle}>Search</Text> */}
       <View style={styles.searchTextContainer}>
         <MaterialIcons name="search" color={colors.accent} size={25} />
         <TextInput
@@ -72,14 +85,13 @@ const Search = () => {
           placeholderTextColor={colors.grayText}
           style={styles.textInput}
           borderColor={colors.white}
-          disableFullscreenUI={true}
           multiline={false}
-          clearButtonMode="while-editing"
           value={searchText}
           onChangeText={text => setSearchText(text)}
         />
         <TouchableOpacity onPress={buttonHandler} style={styles.searchButton}>
-          <Text style={styles.searchButtonText}>Search</Text>
+          <SearchTextWhileLoading />
+          {/* <Text style={styles.searchButtonText}>Search</Text> */}
         </TouchableOpacity>
       </View>
       <SearchResults />
