@@ -6,7 +6,7 @@ import DummyData from '../../DummyData';
 import PopularRender from './PopularRender';
 import axios from 'axios';
 
-const ContentCard = () => {
+const ContentCard = ({navigation}) => {
   // Temporary Data source
 
   const [receivedData, setReceivedData] = React.useState([]);
@@ -24,9 +24,13 @@ const ContentCard = () => {
 
   const renderItems = ({item}) =>
     loading ? (
-      <ActivityIndicator size="large" style={{marginTop: 200}} color={colors.white} />
+      <ActivityIndicator
+        size="large"
+        style={{marginTop: 200}}
+        color={colors.white}
+      />
     ) : (
-      <PopularRender item={item} />
+      <PopularRender item={item} navigation={navigation} />
     );
 
   const infiniteScrollHandler = () => {

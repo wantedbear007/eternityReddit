@@ -4,14 +4,14 @@ import colors from '../assets/colors/colors';
 import {ScreenWidth} from '../assets/Dimensions/ScreenDimensions';
 import ContentCard from '../components/PopularSection/ContentCard';
 
-const Popular = () => {
+const Popular = ({navigation}) => {
   return (
     <View style={styles.parentContainer}>
       <StatusBar backgroundColor={colors.black} />
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>Popular</Text>
       </View>
-      <ContentCard />
+      <ContentCard navigation={navigation} />
     </View>
   );
 };
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderTopLeftRadius: 50,
     borderBottomLeftRadius: 50,
-    zIndex: 100
+    zIndex: 100,
   },
   headingText: {
     color: colors.title,

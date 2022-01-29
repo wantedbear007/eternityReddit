@@ -4,45 +4,65 @@ import colors from '../../assets/colors/colors';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ScreenWidth} from '../../assets/Dimensions/ScreenDimensions';
 
-const PopularRender = ({item}) => {
+const PopularRender = ({item, navigation}) => {
+  const {
+    permalink,
+    title,
+    author,
+    ups,
+    preview,
+    num_comments,
+    subreddit_name_prefixed,
+    total_awards_received,
+  } = item.data;
   // ImageViewHandler
-  const ImageViewer = () => {
+  const ImageUrlHandler = () => {
     if (item.data.preview) {
-      let imageUrl = item.data.preview.images[0].resolutions;
+      let imageUrl = preview.images[0].resolutions;
       if (imageUrl.length > 2) {
-        imageUrl = item.data.preview.images[0].resolutions[2].url;
-      } else imageUrl = item.data.preview.images[0].resolutions[0].url;
+        imageUrl = preview.images[0].resolutions[2].url;
+      } else imageUrl = preview.images[0].resolutions[0].url;
 
       imageUrl = imageUrl.replace(/amp;/g, '');
-      return <Image source={{uri: imageUrl}} style={styles.image} />;
+      return imageUrl;
     } else return null;
   };
 
+  const imageLink = ImageUrlHandler();
+
+  const ImageViewer = () =>
+    imageLink ? <Image source={{uri: imageLink}} style={styles.image} /> : null;
+
   return (
-    <TouchableOpacity activeOpacity={0.6} style={styles.parentContainer}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      style={styles.parentContainer}
+      onPress={() =>
+        navigation.navigate('Details', {
+          data: item,
+          imageUrl: imageLink,
+        })
+      }>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{item.data.title}</Text>
+        <Text style={styles.titleText}>{title}</Text>
         <TouchableOpacity>
           <MaterialIcons name="share" color={colors.white} size={25} />
         </TouchableOpacity>
       </View>
       <View>
-        <Text style={styles.authorText}>u/{item.data.author}</Text>
+        <Text style={styles.authorText}>u/{author}</Text>
         {/* <Text></Text> DATE SECTION*/}
       </View>
       <ImageViewer />
+
       <View style={styles.informationContainer}>
         <View style={styles.likesContainer}>
-          <Text style={styles.likes}>👍 {item.data.ups}</Text>
-          <Text style={styles.awards}>
-            🔥 {item.data.total_awards_received}
-          </Text>
-          <Text style={styles.comments}>💬 {item.data.num_comments}</Text>
+          <Text style={styles.likes}>👍 {ups}</Text>
+          <Text style={styles.awards}>🔥 {total_awards_received}</Text>
+          <Text style={styles.comments}>💬 {num_comments}</Text>
         </View>
         <View style={styles.subRedditContainer}>
-          <Text style={styles.subRedditName}>
-            {item.data.subreddit_name_prefixed}
-          </Text>
+          <Text style={styles.subRedditName}>{subreddit_name_prefixed}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -60,7 +80,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     //   paddingHorizontal: 10,
     paddingVertical: 20,
-    marginHorizontal: 5
+    marginHorizontal: 5,
   },
   titleContainer: {
     flexDirection: 'row',
